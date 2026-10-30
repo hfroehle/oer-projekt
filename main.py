@@ -1,21 +1,24 @@
 # Wichtige Importe
 import os       #Python kann auf Betriebssystem-Funktionen und Umgebungsvariablen zugreifen
 from fastapi import FastAPI, HTTPException      #FastAPI-Framework und Ausgabe Fehlermelungen geladen
-from pydantic import BaseModel                  #Eingaben validieren und überprüfen
+from pydantic import BaseModel, Field           #Eingaben validieren und überprüfen
 from typing import List, Optional               #Verwendung von Listen-Datentypen und flexiblen Parametern
 from sqlalchemy import create_engine, Column, Integer, String, JSON      #Werkzeuge um Python-Objekte in Datenbank-Tabellen zu übersetzen
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Datenbank-URL aus der Umgebungsvariable holen (wird von Docker Compose übergeben), wenn keine gefunden: Standardwert für lokalen Test
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/oer_db")
+# Wenn die App in GitHub Actions (CI) läuft, nutzen wir SQLite als Fallback.
+# Lokal in deinem Docker-Container wird nach wie vor PostgreSQL verwendet.
+if os.getenv("CI"):
+    DATABASE_URL = "sqlite:///./test.db"
+    connect_args = {"check_same_thread": False}
+else:
+    DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://user:password@db:5432/oer_db")
+    connect_args = {}
 
-# SQLAlchemy Setup
-# Wir hängen +psycopg2 an die URL an oder nutzen den Treiber direkt in create_engine
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://user:password@db:5432/oer_db")
-engine = create_engine(DATABASE_URL)        #Baut die Verbindung zur DB auf Basis der URL
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)     #Erstellt Sitzung, über die Lese- und Schreibbefehle an DB geschickt werden
-Base = declarative_base()       #Basisklasse für alle Tabellen-Modelle
+engine = create_engine(DATABASE_URL, connect_args=connect_args)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
 
 # Tabellen-Modell für die Datenbank, Tabelle trägt den Name spiele, Definieren von Spalten als Integer bzw. String, eindeutiger Wert ist id
 class SpielModel(Base):
