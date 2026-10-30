@@ -15,4 +15,4 @@ typing_extensions==4.16.0   # Erweitert Pythons eingebautes Typsystem um moderne
 uvicorn==0.54.0             # Der Hochleistungs-ASGI-Server Uvicorn (Version 0.54.0), der deinen FastAPI-Code im Hintergrund ausführt
 sqlalchemy                  # Die SQLAlchemy-Bibliothek, mit der du Python-Objekte erstellst, die automatisch in SQL-Datenbanktabellen übersetzt werden (für die dauerhafte Speicherung)
 psycopg2-binary             # Der offizielle PostgreSQL-Treiber für Python, damit sich SQLAlchemy fehlerfrei mit deiner Datenbank verbinden kann
-
+requests
