@@ -1,0 +1,18 @@
+ #Diese Datei zeigt die benötigten Versionen, die installiert werden müssen, wenn jemand anderes das Projekt klonen möchte, wird auch von Docker verwendet
+annotated-doc==0.0.5		# Ein Hilfspaket, das oft von anderen Bibliotheken (wie Pydantic) für Typisierungen genutzt wird
+annotated-types==0.8.0      # Stellt erweiterte Typ-Metadaten für Python zur Verfügung (wird intern von FastAPI/Pydantic benötigt)
+anyio==4.15.1               # Eine Bibliothek für asynchrone Ein- und Ausgabe (wird im Hintergrund von modernen Web-Frameworks genutzt)
+click==8.5.0                # Ein beliebtes Tool zur Erstellung von Befehlszeilen-Schnittstellen (CLI)
+fastapi==0.142.2            # Das Haupt-Web-Framework FastAPI in Version 0.142.2, mit dem du deine API-Endpunkte baust
+h11==0.16.0                 # Ein kleiner, schneller HTTP-Protokoll-Handler, den Uvicorn für Netzwerkverbindungen verwendet
+idna==3.20                  # Ein Paket zur Unterstützung internationalisierter Domainnamen (wird u.a. für URLs gebraucht)
+opentelemetry-api==1.45.0   # Ein Werkzeug für Telemetrie und Monitoring (OpenTelemetry), um z.B. Datenflüsse zu messen
+pydantic==2.13.5            # Das Validierungs-Framework Pydantic (Version 2.13.5), das prüft, ob eintreffende Daten (wie POST-Anfragen) korrekt aufgebaut sind
+pydantic_core==2.46.5       # Der superschnelle C++-Kern, der im Hintergrund die Arbeit für Pydantic erledigt
+starlette==1.7.0            # Das ASGI-Toolkit (Starlette), auf dem FastAPI komplett aufbaut und das die Web-Grundlagen liefert
+typing-inspection==0.4.4    # Hilfsfunktionen für Python-Typisierungen (Typ-Inspektion)
+typing_extensions==4.16.0   # Erweitert Pythons eingebautes Typsystem um moderne Features (wird von fast allen modernen Bibliotheken genutzt)
+uvicorn==0.54.0             # Der Hochleistungs-ASGI-Server Uvicorn (Version 0.54.0), der deinen FastAPI-Code im Hintergrund ausführt
+sqlalchemy                  # Die SQLAlchemy-Bibliothek, mit der du Python-Objekte erstellst, die automatisch in SQL-Datenbanktabellen übersetzt werden (für die dauerhafte Speicherung)
+psycopg2-binary             # Der offizielle PostgreSQL-Treiber für Python, damit sich SQLAlchemy fehlerfrei mit deiner Datenbank verbinden kann
+

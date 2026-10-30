@@ -1,0 +1,40 @@
+name: OER-Projekt CI Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Quellcode aus dem Repository herunterladen
+    - name: Code auschecken
+      uses: actions/checkout@v4
+
+    # 2. Python-Umgebung einrichten
+    - name: Python einrichten
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    # 3. Abhängigkeiten installieren
+    - name: Abhängigkeiten installieren
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 4. Optional: Testlauf / Linting (prüft, ob die main.py fehlerfrei lädt)
+    - name: FastAPI-App Syntax prüfen
+      run: |
+        python -c "import main; print('FastAPI App erfolgreich geladen und syntax-geprüft!')"
+
+    # 5. Docker Compose Build Test (prüft, ob das Container-Setup funktioniert)
+    - name: Docker Compose Test
+      run: |
+        docker compose config
+        docker compose build

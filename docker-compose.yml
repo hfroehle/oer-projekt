@@ -1,0 +1,25 @@
+services:	# Definiert den Beginn aller Container-Dienste, die gemeinsam gestartet werden sollen
+  web:		# Erstellt den Service für deine FastAPI-Webanwendung (das Backend)
+    build: .	# Sagt Docker, dass es das Image frisch aus dem aktuellen Ordner (.) bauen soll (mithilfe des Dockerfiles)
+    ports:	# Leitet den Port 8000 des Containers an den Computer weiter, damit man im Browser oder Postman auf die API zugreifen kann
+      - "8000:8000"
+    volumes:	#Lokaler Projektordner wird in den Container gespiegelt
+      - .:/app
+    environment:	 # Übergibt Umgebungsvariablen an den Container – hier die Verbindungsadresse, damit FastAPI weiß, wie es mit der Datenbank sprechen muss
+      - DATABASE_URL=postgresql://user:password@db:5432/oer_db
+    depends_on:		# Bestimmt die Startreihenfolge: Docker wartet, bis der Datenbank-Dienst (db) vollständig hochgefahren ist, bevor das Web-Backend startet
+      - db
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload	#Server im Hintergrund bei Änderungen automatisch neu gestartet
+  
+  db:		# Erstellt den Service für die PostgreSQL-Datenbank
+    image: postgres:15-alpine 	    # Nutzt ein offizielles, leichtgewichtigenes PostgreSQL-Image direkt aus dem Docker Hub
+    restart: always		    # Sorgt dafür, dass die Datenbank automatisch neu startet, falls der Container abstürzt oder der Rechner neu hochfährt
+    environment:		    # Legt die Zugangsdaten fest, die PostgreSQL für die Einrichtung der Datenbank benötigt
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: oer_db
+    volumes:			    # Bindet den dauerhaften Speicher ein: Sichert den internen Datenbank-Ordner in einem Docker-Volume, damit Daten beim Herunterfahren nicht gelöscht werden
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:	# Registriert das Volume global in Docker, damit die Docker-Engine den permanenten Speicherplatz auf deiner Festplatte verwaltet und schützt
+  postgres_data:
