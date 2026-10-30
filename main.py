@@ -11,6 +11,8 @@ from sqlalchemy.orm import sessionmaker
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:password@localhost:5432/oer_db")
 
 # SQLAlchemy Setup
+# Wir hängen +psycopg2 an die URL an oder nutzen den Treiber direkt in create_engine
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://user:password@db:5432/oer_db")
 engine = create_engine(DATABASE_URL)        #Baut die Verbindung zur DB auf Basis der URL
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)     #Erstellt Sitzung, über die Lese- und Schreibbefehle an DB geschickt werden
 Base = declarative_base()       #Basisklasse für alle Tabellen-Modelle
