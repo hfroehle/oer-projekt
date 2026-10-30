@@ -24,7 +24,7 @@ class SpielModel(Base):
     titel = Column(String, index=True)
     beschreibung = Column(String, nullable=True)
     typ = Column(String)
-    spielmechanik = Colum(JSON)
+    spielmechanik = Column(JSON)
     lernziel = Column(String)
     lizenz = Column(String)
     zielgruppe = Column(String, nullable=True)  
