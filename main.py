@@ -3,7 +3,7 @@ import os       #Python kann auf Betriebssystem-Funktionen und Umgebungsvariable
 from fastapi import FastAPI, HTTPException      #FastAPI-Framework und Ausgabe Fehlermelungen geladen
 from pydantic import BaseModel                  #Eingaben validieren und überprüfen
 from typing import List, Optional               #Verwendung von Listen-Datentypen und flexiblen Parametern
-from sqlalchemy import create_engine, Column, Integer, String       #Werkzeuge um Python-Objekte in Datenbank-Tabellen zu übersetzen
+from sqlalchemy import create_engine, Column, Integer, String, JSON      #Werkzeuge um Python-Objekte in Datenbank-Tabellen zu übersetzen
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
