@@ -51,6 +51,14 @@ class OerSpielCreate(BaseModel):
     fach: str
 
 # GET: Alle Spiele aus PostgreSQL abrufen
+@app.get("/spiele")
+def get_alle_spiele():
+    db = SessionLocal()
+    spiele = db.query(SpielModel).all()
+    db.close()
+    return {"spiele": spiele}
+
+# GET: Gezielte Suche nach Kriterien
 @app.get("/spiele/suchen")                  #Definiert URL Aufruf
 def suche_spiele(mechanik: Optional[str] = None, lernziel: Optional[str] = None):       #Durchsucht die PostgreSQL-Datenbank flexibel nach Spielmechanik oder Lernziel
     db = SessionLocal()                     #Öffnet Verbindung zur DB
