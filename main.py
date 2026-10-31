@@ -20,7 +20,7 @@ engine = create_engine(DATABASE_URL, connect_args=connect_args)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Tabellen-Modell für die Datenbank, Tabelle trägt den Name spiele, Definieren von Spalten als Integer bzw. String, eindeutiger Wert ist id
+# Tabellen-Modell für die Datenbank, Tabelle trägt den Name spiele, Definieren von Spalten als Integer, String oder JSON, eindeutiger Wert ist id
 class SpielModel(Base):
     __tablename__ = "spiele"
     id = Column(Integer, primary_key=True, index=True)
